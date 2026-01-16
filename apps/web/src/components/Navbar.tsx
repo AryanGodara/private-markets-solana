@@ -1,0 +1,44 @@
+'use client';
+
+import { WalletMultiButton } from '@solana/wallet-adapter-react-ui';
+
+const Navbar = () => {
+  return (
+    <nav className="fixed top-0 left-0 right-0 z-50 px-6 py-4">
+      <div className="max-w-7xl mx-auto">
+        <div className="flex items-center justify-between">
+          {/* Logo */}
+          <div className="flex items-center gap-2">
+            <div className="w-10 h-10 rounded-xl bg-dark border-2 border-dark flex items-center justify-center shadow-[4px_4px_0px_0px_rgba(0,0,0,1)] transform hover:translate-x-[2px] hover:translate-y-[2px] hover:shadow-[2px_2px_0px_0px_rgba(0,0,0,1)] transition-all">
+              <span className="text-neon-green font-bold text-lg">Ω</span>
+            </div>
+          </div>
+
+          {/* Center Links */}
+          <div className="hidden md:flex items-center bg-white/80 backdrop-blur-sm px-2 py-1 rounded-2xl border-2 border-dark shadow-[3px_3px_0px_0px_rgba(0,0,0,1)]">
+            <NavLink href="#holdings">Holdings</NavLink>
+            <NavLink href="#markets">Markets.xyz</NavLink>
+            <NavLink href="#docs">Docs</NavLink>
+          </div>
+
+          {/* Connect Wallet */}
+          <div>
+            <WalletMultiButton className="!bg-dark !text-white !rounded-3xl !px-6 !py-3 !text-sm !font-bold !border-2 !border-dark !shadow-[3px_3px_0px_0px_rgba(0,0,0,1)] hover:!-translate-y-0.5 hover:!shadow-lg active:!translate-y-0 !transition-all !duration-200" />
+          </div>
+        </div>
+      </div>
+    </nav>
+  );
+};
+
+const NavLink = ({ href, children }: { href: string; children: React.ReactNode }) => (
+  <a
+    href={href}
+    className="px-5 py-2 font-bold text-sm text-dark/80 hover:text-dark transition-colors relative group"
+  >
+    {children}
+    <span className="absolute bottom-1 left-1/2 -translate-x-1/2 w-0 h-0.5 bg-neon-green group-hover:w-3/4 transition-all duration-300" />
+  </a>
+);
+
+export default Navbar;

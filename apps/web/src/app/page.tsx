@@ -1,12 +1,15 @@
 'use client';
 
-import { WalletMultiButton } from '@solana/wallet-adapter-react-ui';
-import { Shield, Eye, Bot, TrendingUp } from 'lucide-react';
-import Link from 'next/link';
+import Navbar from '@/components/Navbar';
+import HeroSection from '@/components/LandingPage';
 
 export default function Home() {
   return (
-    <main>
-    </main>
+    <div className="relative min-h-screen bg-off-white">
+      <Navbar />
+      <main>
+        <HeroSection />
+      </main>
+    </div>
   );
 }

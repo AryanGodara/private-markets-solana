@@ -13,9 +13,23 @@ module.exports = {
         'shadow-secondary': '#1e1b4b',
         'privacy-green': '#10b981',
         'privacy-red': '#ef4444',
+        'neon-green': '#00FF41',
+        'neon-purple': '#8B5CF6',
+        'off-white': '#F8F7F4',
+        'dark': '#1A1A1A',
       },
       fontFamily: {
         mono: ['var(--font-mono)'],
+        sans: ['Inter', 'system-ui', 'sans-serif'],
+      },
+      animation: {
+        'float': 'float 3s ease-in-out infinite',
+      },
+      keyframes: {
+        float: {
+          '0%, 100%': { transform: 'translateY(0px)' },
+          '50%': { transform: 'translateY(-10px)' },
+        },
       },
     },
   },
