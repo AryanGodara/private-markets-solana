@@ -1,33 +1,52 @@
 /** @type {import('next').NextConfig} */
 const nextConfig = {
+  reactStrictMode: true,
+  swcMinify: true,
+  
   webpack: (config, { isServer }) => {
     // Fixes for Solana and crypto packages
-    config.resolve.fallback = {
-      fs: false,
-      net: false,
-      tls: false,
-      crypto: false,
-      process: false,
-      path: false,
-      zlib: false,
-      http: false,
-      https: false,
-      stream: false,
-    };
+    if (!isServer) {
+      config.resolve.fallback = {
+        ...config.resolve.fallback,
+        fs: false,
+        net: false,
+        tls: false,
+        crypto: false,
+        process: false,
+        path: false,
+        zlib: false,
+        http: false,
+        https: false,
+        stream: false,
+        os: false,
+      };
+    }
 
-    // Ignore node-gyp build errors for optional dependencies
+    // Externalize problematic native modules
+    config.externals = config.externals || [];
     config.externals.push({
-      'bigint-buffer': 'bigint-buffer',
-      'tiny-secp256k1': 'tiny-secp256k1',
+      'utf-8-validate': 'commonjs utf-8-validate',
+      'bufferutil': 'commonjs bufferutil',
+      'bigint-buffer': 'commonjs bigint-buffer',
+      'tiny-secp256k1': 'commonjs tiny-secp256k1',
     });
+
+    // Ignore specific warnings
+    config.ignoreWarnings = [
+      { module: /node_modules\/@solana/ },
+      { module: /node_modules\/bigint-buffer/ },
+    ];
 
     return config;
   },
+  
   transpilePackages: ['@solana/web3.js'],
-  // Disable static optimization for dynamic imports
-  experimental: {
-    esmExternals: 'loose',
-  },
+  
+  // Optimize production build
+  productionBrowserSourceMaps: false,
+  
+  // Disable x-powered-by header
+  poweredByHeader: false,
 };
 
 module.exports = nextConfig;
