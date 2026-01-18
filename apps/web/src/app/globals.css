@@ -2,68 +2,197 @@
 @tailwind components;
 @tailwind utilities;
 
+/* =========================
+   BASE STYLES
+========================= */
 @layer base {
   body {
     background-color: #F8F7F4;
     position: relative;
   }
-  
+
   /* EXTREMELY HEAVY GRAINY TEXTURE - Covers Everything */
   body::before {
     content: '';
     position: fixed;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
-    background-image: 
+    inset: 0;
+    background-image:
       url("data:image/svg+xml,%3Csvg viewBox='0 0 300 300' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noiseFilter'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='8' numOctaves='8' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noiseFilter)' opacity='0.8'/%3E%3C/svg%3E");
     pointer-events: none;
     z-index: 99999;
-    opacity: 1;
     mix-blend-mode: overlay;
   }
-  
-  /* Second heavy grain layer for extra thickness */
+
+  /* Second heavy grain layer */
   body::after {
     content: '';
     position: fixed;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
-    background-image: 
+    inset: 0;
+    background-image:
       url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noiseFilter2'%3E%3CfeTurbulence type='turbulence' baseFrequency='6' numOctaves='6' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noiseFilter2)' opacity='0.7'/%3E%3C/svg%3E");
     pointer-events: none;
     z-index: 99998;
-    opacity: 1;
     mix-blend-mode: multiply;
   }
 }
 
+/* =========================
+   UTILITIES
+========================= */
 @layer utilities {
   .text-shadow-sm {
     text-shadow: 0 1px 2px rgba(0, 0, 0, 0.1);
   }
-  
+
   .shadow-brutal {
     box-shadow: 8px 8px 0px rgba(0, 0, 0, 1);
   }
-  
+
   .shadow-brutal-hover {
     box-shadow: 12px 12px 0px rgba(0, 0, 0, 1);
   }
+
+  /* Floating lock */
+  .animate-float {
+    animation: float 4s ease-in-out infinite;
+  }
+
+  /* Glow ring */
+  .animate-pulse-glow {
+    animation: pulseGlow 3s ease-in-out infinite;
+  }
+
+  /* PERFECT upright orbit */
+  .orbit-upright {
+    animation: uprightOrbit 14s linear infinite;
+    transform-origin: center;
+  }
+
+  /* Minimal page animations */
+  .animate-fade-in {
+    animation: fadeIn 0.6s ease-out forwards;
+    opacity: 0;
+  }
+
+  .animate-slide-up {
+    animation: slideUp 0.6s ease-out forwards;
+    opacity: 0;
+  }
+
+  .animate-slide-down {
+    animation: slideDown 0.5s ease-out forwards;
+    opacity: 0;
+  }
+
+  .animate-scale-in {
+    animation: scaleIn 0.8s ease-out forwards;
+    opacity: 0;
+  }
 }
 
-/* Wallet adapter styling */
+/* =========================
+   KEYFRAMES
+========================= */
+@keyframes float {
+
+  0%,
+  100% {
+    transform: translateY(0);
+  }
+
+  50% {
+    transform: translateY(-10px);
+  }
+}
+
+@keyframes pulseGlow {
+
+  0%,
+  100% {
+    opacity: 0.4;
+  }
+
+  50% {
+    opacity: 0.8;
+  }
+}
+
+/*
+  Mathematical upright orbit:
+  rotate → translate → counter-rotate
+  Radius ≈ 80% of orb
+*/
+@keyframes uprightOrbit {
+  from {
+    transform: rotate(0deg) translateY(-140px) rotate(0deg);
+  }
+
+  to {
+    transform: rotate(360deg) translateY(-140px) rotate(-360deg);
+  }
+}
+
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+  }
+
+  to {
+    opacity: 1;
+  }
+}
+
+@keyframes slideUp {
+  from {
+    opacity: 0;
+    transform: translateY(20px);
+  }
+
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes slideDown {
+  from {
+    opacity: 0;
+    transform: translateY(-10px);
+  }
+
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes scaleIn {
+  from {
+    opacity: 0;
+    transform: scale(0.95);
+  }
+
+  to {
+    opacity: 1;
+    transform: scale(1);
+  }
+}
+
+/* =========================
+   WALLET ADAPTER STYLING
+========================= */
 .wallet-adapter-button {
   background-color: #1A1A1A !important;
+  color: white !important;
   border-radius: 9999px !important;
   padding: 12px 28px !important;
-  font-size: 15px !important;
+  font-size: 0 !important;
   font-weight: 700 !important;
   transition: all 0.2s !important;
   border: 2px solid #1A1A1A !important;
+  display: flex !important;
+  align-items: center !important;
+  gap: 8px !important;
 }
 
 .wallet-adapter-button:hover {
@@ -71,13 +200,30 @@
   box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15) !important;
 }
 
-/* Change "Select Wallet" to "Connect Wallet" */
-.wallet-adapter-button:not(.wallet-adapter-button-trigger) {
-  font-size: 0 !important;
+/* Hide default wallet icon */
+.wallet-adapter-button-start-icon {
+  display: none !important;
 }
 
-.wallet-adapter-button:not(.wallet-adapter-button-trigger)::before {
+/* Custom wallet icon */
+.wallet-adapter-button::before {
+  content: "" !important;
+  display: inline-block !important;
+  width: 20px !important;
+  height: 20px !important;
+  background-image: url('/wallet.svg') !important;
+  background-size: contain !important;
+  background-repeat: no-repeat !important;
+  background-position: center !important;
+  filter: brightness(0) invert(1) !important;
+  margin-right: 8px !important;
+  flex-shrink: 0 !important;
+}
+
+/* Replace button text */
+.wallet-adapter-button::after {
   content: "Connect Wallet" !important;
-  font-size: 14px !important;
+  font-size: 15px !important;
   font-weight: 700 !important;
+  color: white !important;
 }
