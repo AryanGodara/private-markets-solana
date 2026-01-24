@@ -66,7 +66,8 @@ Create a compelling, verifiable YES/NO question that privacy-focused traders wou
         ]
       });
 
-      const content = response.content[0].text;
+      const block = response.content[0];
+      const content = block.type === 'text' ? block.text : '';
       const market = JSON.parse(content);
 
       return {
@@ -100,7 +101,8 @@ Create a compelling, verifiable YES/NO question that privacy-focused traders wou
         ]
       });
 
-      const content = response.content[0].text;
+      const block = response.content[0];
+      const content = block.type === 'text' ? block.text : '';
       const market = JSON.parse(content);
 
       return {
@@ -140,7 +142,7 @@ Create a compelling, verifiable YES/NO question that privacy-focused traders wou
         const market = await this.generateFromTopic(topics[i]);
         results.push({ success: true, market });
       } catch (error) {
-        results.push({ success: false, error: error.message, topic: topics[i] });
+        results.push({ success: false, error: (error as Error).message, topic: topics[i] });
       }
     }
 

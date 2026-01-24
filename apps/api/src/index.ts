@@ -1,13 +1,30 @@
+// Load environment variables FIRST, before any other imports
+import dotenv from 'dotenv';
+import path from 'path';
+
+// Load .env - try multiple paths for different execution contexts
+const envPaths = [
+  path.resolve(process.cwd(), '.env'),                    // From api directory
+  path.resolve(process.cwd(), 'apps/api/.env'),           // From monorepo root
+];
+
+for (const envPath of envPaths) {
+  const result = dotenv.config({ path: envPath });
+  if (!result.error && process.env.ANTHROPIC_API_KEY) {
+    console.log('✅ Loaded .env from:', envPath);
+    break;
+  }
+}
+
 import express from 'express';
 import cors from 'cors';
 import helmet from 'helmet';
-import dotenv from 'dotenv';
 
 import marketRoutes from './routes/markets';
 import tradingRoutes from './routes/trading';
 import agentRoutes from './routes/agent';
-
-dotenv.config();
+import privacyRoutes from './routes/privacy';
+import pricesRoutes from './routes/prices';
 
 const app = express();
 const port = process.env.PORT || 3001;
@@ -21,6 +38,8 @@ app.use(express.json());
 app.use('/api/markets', marketRoutes);
 app.use('/api/trading', tradingRoutes);
 app.use('/api/agent', agentRoutes);
+app.use('/api/privacy', privacyRoutes);
+app.use('/api/prices', pricesRoutes);
 
 // Health check
 app.get('/health', (req, res) => {

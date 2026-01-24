@@ -1,6 +1,15 @@
 'use client';
 
-import { WalletMultiButton } from '@solana/wallet-adapter-react-ui';
+import Link from 'next/link';
+import dynamic from 'next/dynamic';
+
+// CRITICAL: Use dynamic import with ssr: false for WalletMultiButton
+// This prevents the "WalletContext without providing one" error
+// The button tries to access context during SSR before Provider is ready
+const WalletMultiButtonDynamic = dynamic(
+  async () => (await import('@solana/wallet-adapter-react-ui')).WalletMultiButton,
+  { ssr: false }
+);
 
 const Navbar = () => {
   return (
@@ -9,25 +18,27 @@ const Navbar = () => {
         <div className="flex items-center justify-between">
           {/* Logo */}
           <div className="flex items-center gap-2">
-            <div className="w-12 h-12 rounded-xl bg-dark border-2 border-dark flex items-center justify-center shadow-[4px_4px_0px_0px_rgba(0,0,0,1)] transform hover:translate-x-[2px] hover:translate-y-[2px] hover:shadow-[2px_2px_0px_0px_rgba(0,0,0,1)] transition-all">
-              <img 
-                src="/frog-logo.svg" 
-                alt="Logo" 
-                className="w-[70%] h-[70%] object-contain"
-              />
-            </div>
+            <Link href="/">
+              <div className="w-12 h-12 rounded-xl bg-dark border-2 border-dark flex items-center justify-center shadow-[4px_4px_0px_0px_rgba(0,0,0,1)] transform hover:translate-x-[2px] hover:translate-y-[2px] hover:shadow-[2px_2px_0px_0px_rgba(0,0,0,1)] transition-all cursor-pointer">
+                <img
+                  src="/frog-logo.svg"
+                  alt="Logo"
+                  className="w-[70%] h-[70%] object-contain"
+                />
+              </div>
+            </Link>
           </div>
 
           {/* Center Links */}
           <div className="hidden md:flex items-center bg-white/80 backdrop-blur-sm px-2 py-1 rounded-2xl border-2 border-dark shadow-[3px_3px_0px_0px_rgba(0,0,0,1)]">
-            <NavLink href="#holdings">Holdings</NavLink>
-            <NavLink href="#markets">Markets.xyz</NavLink>
-            <NavLink href="#docs">Docs</NavLink>
+            <NavLink href="/dashboard">Dashboard</NavLink>
+            <NavLink href="/markets">Markets</NavLink>
+            <NavLink href="/agent">AI Agent</NavLink>
           </div>
 
-          {/* Connect Wallet */}
+          {/* Connect Wallet - Dynamic import prevents SSR context issues */}
           <div>
-            <WalletMultiButton className="!bg-dark !text-white !rounded-3xl !px-6 !py-3 !text-sm !font-bold !border-2 !border-dark !shadow-[3px_3px_0px_0px_rgba(0,0,0,1)] hover:!-translate-y-0.5 hover:!shadow-lg active:!translate-y-0 !transition-all !duration-200" />
+            <WalletMultiButtonDynamic />
           </div>
         </div>
       </div>
@@ -36,13 +47,13 @@ const Navbar = () => {
 };
 
 const NavLink = ({ href, children }: { href: string; children: React.ReactNode }) => (
-  <a
+  <Link
     href={href}
     className="px-5 py-2 font-bold text-sm text-dark/80 hover:text-dark transition-colors relative group"
   >
     {children}
     <span className="absolute bottom-1 left-1/2 -translate-x-1/2 w-0 h-0.5 bg-neon-green group-hover:w-3/4 transition-all duration-300" />
-  </a>
+  </Link>
 );
 
 export default Navbar;

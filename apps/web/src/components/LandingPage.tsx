@@ -1,5 +1,6 @@
 'use client';
 
+import Link from 'next/link';
 import { ArrowRight, Sparkles, Lock, Eye, TrendingUp, Shield } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 
@@ -32,14 +33,18 @@ const HeroSection = () => {
             </p>
 
             <div className="flex flex-col sm:flex-row items-center gap-4 justify-center lg:justify-start animate-fade-in" style={{ animationDelay: '0.4s' }}>
-              <Button variant="hero" size="xl" className="w-full sm:w-auto group">
-                Enter The Markets
-                <ArrowRight className="w-5 h-5 group-hover:-rotate-45 transition-transform duration-300" />
-              </Button>
-              <Button variant="heroSecondary" size="xl" className="w-full sm:w-auto group">
-                Read Docs
-                <ArrowRight className="w-5 h-5 group-hover:-rotate-45 transition-transform duration-300" />
-              </Button>
+              <Link href="/markets">
+                <Button variant="hero" size="xl" className="w-full sm:w-auto group">
+                  Enter The Markets
+                  <ArrowRight className="w-5 h-5 group-hover:-rotate-45 transition-transform duration-300" />
+                </Button>
+              </Link>
+              <Link href="/agent">
+                <Button variant="heroSecondary" size="xl" className="w-full sm:w-auto group">
+                  AI Agent
+                  <ArrowRight className="w-5 h-5 group-hover:-rotate-45 transition-transform duration-300" />
+                </Button>
+              </Link>
             </div>
           </div>
 

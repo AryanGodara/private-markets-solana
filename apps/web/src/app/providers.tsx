@@ -1,35 +1,19 @@
-'use client';
+"use client";
 
-import { ConnectionProvider, WalletProvider } from '@solana/wallet-adapter-react';
-import { WalletAdapterNetwork } from '@solana/wallet-adapter-base';
-import { WalletModalProvider } from '@solana/wallet-adapter-react-ui';
-import { clusterApiUrl } from '@solana/web3.js';
-import { PhantomWalletAdapter, SolflareWalletAdapter } from '@solana/wallet-adapter-wallets';
-import { useMemo } from 'react';
+import { ReactNode } from "react";
+import dynamic from "next/dynamic";
 
-// Import wallet adapter CSS
-require('@solana/wallet-adapter-react-ui/styles.css');
+// Dynamic import the wallet provider with ssr: false
+// This ensures wallet context is only created on client side
+const WalletContextProvider = dynamic(
+  () => import("./wallet-provider").then((mod) => mod.WalletContextProvider),
+  { ssr: false }
+);
 
-export function Providers({ children }: { children: React.ReactNode }) {
-  // Use devnet for hackathon
-  const network = WalletAdapterNetwork.Devnet;
-  const endpoint = useMemo(() => clusterApiUrl(network), [network]);
+interface ProvidersProps {
+  children: ReactNode;
+}
 
-  const wallets = useMemo(
-    () => [
-      new PhantomWalletAdapter(),
-      new SolflareWalletAdapter(),
-    ],
-    []
-  );
-
-  return (
-    <ConnectionProvider endpoint={endpoint}>
-      <WalletProvider wallets={wallets} autoConnect>
-        <WalletModalProvider>
-          {children}
-        </WalletModalProvider>
-      </WalletProvider>
-    </ConnectionProvider>
-  );
+export function Providers({ children }: ProvidersProps) {
+  return <WalletContextProvider>{children}</WalletContextProvider>;
 }

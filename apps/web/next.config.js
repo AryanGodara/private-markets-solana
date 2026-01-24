@@ -2,34 +2,35 @@
 const nextConfig = {
   reactStrictMode: true,
   swcMinify: true,
-  
+
   webpack: (config, { isServer }) => {
-    // Fixes for Solana and crypto packages
+    // Fixes for Solana and crypto packages in browser
     if (!isServer) {
       config.resolve.fallback = {
         ...config.resolve.fallback,
         fs: false,
         net: false,
         tls: false,
-        crypto: false,
-        process: false,
+        crypto: require.resolve('crypto-browserify'),
+        process: require.resolve('process/browser'),
         path: false,
         zlib: false,
         http: false,
         https: false,
-        stream: false,
+        stream: require.resolve('stream-browserify'),
         os: false,
+        buffer: require.resolve('buffer/'),
       };
-    }
 
-    // Externalize problematic native modules
-    config.externals = config.externals || [];
-    config.externals.push({
-      'utf-8-validate': 'commonjs utf-8-validate',
-      'bufferutil': 'commonjs bufferutil',
-      'bigint-buffer': 'commonjs bigint-buffer',
-      'tiny-secp256k1': 'commonjs tiny-secp256k1',
-    });
+      // Provide Buffer globally for Solana packages
+      const webpack = require('webpack');
+      config.plugins.push(
+        new webpack.ProvidePlugin({
+          Buffer: ['buffer', 'Buffer'],
+          process: 'process/browser',
+        })
+      );
+    }
 
     // Ignore specific warnings
     config.ignoreWarnings = [
@@ -39,12 +40,12 @@ const nextConfig = {
 
     return config;
   },
-  
-  transpilePackages: ['@solana/web3.js'],
-  
+
+  transpilePackages: ['@solana/web3.js', '@solana/wallet-adapter-react', '@solana/wallet-adapter-base'],
+
   // Optimize production build
   productionBrowserSourceMaps: false,
-  
+
   // Disable x-powered-by header
   poweredByHeader: false,
 };

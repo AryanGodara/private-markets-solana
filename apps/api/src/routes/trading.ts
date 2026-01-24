@@ -29,7 +29,7 @@ router.post('/encrypt', async (req, res) => {
   } catch (error) {
     res.status(400).json({
       success: false,
-      error: error.message
+      error: (error as Error).message
     });
   }
 });
@@ -58,7 +58,7 @@ router.post('/execute', async (req, res) => {
   } catch (error) {
     res.status(400).json({
       success: false,
-      error: error.message
+      error: (error as Error).message
     });
   }
 });
@@ -85,7 +85,7 @@ router.get('/market/:marketId/info', async (req, res) => {
   } catch (error) {
     res.status(500).json({
       success: false,
-      error: error.message
+      error: (error as Error).message
     });
   }
 });

@@ -39,5 +39,10 @@ pnpm-debug.log*
 *.keypair
 *.json.key
 wallet/
+test-ledger
 
-privacy-oracle/
+# Claude
+.claude/
+AGENTS.md
+CLAUDE.md
+PITCH.md
