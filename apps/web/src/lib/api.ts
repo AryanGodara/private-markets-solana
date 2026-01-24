@@ -30,11 +30,18 @@ export interface MarketPrices {
   no: number;
 }
 
+export interface EncryptedValue {
+  handle: string;       // The encrypted hex string (ciphertext)
+  timestamp: number;    // When encryption occurred
+  type: 'uint256' | 'bool';
+}
+
 export interface EncryptedTrade {
-  encryptedAmount: string;
-  encryptedSide: string;
+  encryptedAmount: EncryptedValue;
+  encryptedSide: EncryptedValue;
   marketAddress: string;
   timestamp: number;
+  commitmentHash: string;  // Proof that trade exists without revealing contents
 }
 
 export interface AgentStatus {

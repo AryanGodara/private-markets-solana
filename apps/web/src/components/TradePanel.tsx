@@ -4,7 +4,7 @@ import { useState } from 'react';
 import { usePhantom, useAccounts } from '@phantom/react-sdk';
 import { Lock, Eye, EyeOff, AlertCircle, CheckCircle } from 'lucide-react';
 import { Button } from '@/components/ui/button';
-import { encryptTrade, executeTrade, MarketPrices } from '@/lib/api';
+import { encryptTrade, executeTrade, MarketPrices, EncryptedTrade } from '@/lib/api';
 
 interface TradePanelProps {
   marketAddress: string;
@@ -26,7 +26,7 @@ export default function TradePanel({
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState<string | null>(null);
   const [success, setSuccess] = useState(false);
-  const [encryptedData, setEncryptedData] = useState<string | null>(null);
+  const [encryptedData, setEncryptedData] = useState<EncryptedTrade | null>(null);
 
   // Get the Solana address from connected accounts
   const solanaAccount = accounts?.find((a) => a.addressType === 'solana');
@@ -51,7 +51,7 @@ export default function TradePanel({
         marketAddress,
       });
 
-      setEncryptedData(encrypted.encryptedAmount);
+      setEncryptedData(encrypted);
       setShowEncrypted(true);
     } catch (err) {
       setError(err instanceof Error ? err.message : 'Encryption failed');
@@ -189,14 +189,29 @@ export default function TradePanel({
 
       {/* Encrypted Preview */}
       {showEncrypted && encryptedData && (
-        <div className="mb-6 p-4 bg-dark/5 rounded-xl border border-dark/20">
-          <div className="flex items-center gap-2 text-sm font-medium mb-2">
+        <div className="mb-6 p-4 bg-dark/5 rounded-xl border border-dark/20 space-y-3">
+          <div className="flex items-center gap-2 text-sm font-medium">
             <Lock className="w-4 h-4 text-neon-green" />
-            <span>Encrypted Amount</span>
+            <span>Encrypted Trade Data (Inco ECIES)</span>
           </div>
-          <code className="text-xs break-all text-dark/60">
-            {encryptedData.slice(0, 50)}...
-          </code>
+          <div>
+            <p className="text-xs text-dark/50 mb-1">Encrypted Amount:</p>
+            <code className="text-xs break-all text-dark/60 block bg-white/50 p-2 rounded">
+              {encryptedData.encryptedAmount.handle.slice(0, 60)}...
+            </code>
+          </div>
+          <div>
+            <p className="text-xs text-dark/50 mb-1">Encrypted Side ({side.toUpperCase()}):</p>
+            <code className="text-xs break-all text-dark/60 block bg-white/50 p-2 rounded">
+              {encryptedData.encryptedSide.handle.slice(0, 60)}...
+            </code>
+          </div>
+          <div>
+            <p className="text-xs text-dark/50 mb-1">Commitment Hash:</p>
+            <code className="text-xs break-all text-neon-green block bg-white/50 p-2 rounded">
+              {encryptedData.commitmentHash.slice(0, 32)}...
+            </code>
+          </div>
         </div>
       )}
 
