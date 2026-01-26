@@ -2,12 +2,16 @@
   "name": "shadow-alpha-api",
   "version": "0.1.0",
   "private": true,
+  "engines": {
+    "node": "20.x"
+  },
   "scripts": {
     "dev": "tsx watch src/index.ts",
-    "build": "tsc",
+    "build": "esbuild src/index.ts --bundle --platform=node --target=node20 --outfile=dist/index.js --external:@solana/* --external:pnp-sdk --external:@inco/* --external:express --external:cors --external:helmet --external:dotenv --external:axios --external:zod --external:node-cron --external:rss-parser --external:@anthropic-ai/sdk --external:@google/*",
     "start": "node dist/index.js",
     "lint": "eslint src --ext .ts",
-    "type-check": "tsc --noEmit"
+    "type-check": "tsc --noEmit",
+    "vercel-build": "pnpm build"
   },
   "dependencies": {
     "@anthropic-ai/sdk": "^0.52.0",
@@ -34,6 +38,7 @@
     "@typescript-eslint/eslint-plugin": "^6.15.0",
     "@typescript-eslint/parser": "^6.15.0",
     "bs58": "^6.0.0",
+    "esbuild": "^0.27.2",
     "eslint": "^8.56.0",
     "tsx": "^4.6.2",
     "typescript": "^5.3.3"

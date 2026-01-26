@@ -3,16 +3,19 @@ import dotenv from 'dotenv';
 import path from 'path';
 
 // Load .env - try multiple paths for different execution contexts
-const envPaths = [
-  path.resolve(process.cwd(), '.env'),                    // From api directory
-  path.resolve(process.cwd(), 'apps/api/.env'),           // From monorepo root
-];
+// In production (Vercel), env vars are set via dashboard
+if (process.env.NODE_ENV !== 'production') {
+  const envPaths = [
+    path.resolve(process.cwd(), '.env'),                    // From api directory
+    path.resolve(process.cwd(), 'apps/api/.env'),           // From monorepo root
+  ];
 
-for (const envPath of envPaths) {
-  const result = dotenv.config({ path: envPath });
-  if (!result.error && process.env.ANTHROPIC_API_KEY) {
-    console.log('✅ Loaded .env from:', envPath);
-    break;
+  for (const envPath of envPaths) {
+    const result = dotenv.config({ path: envPath });
+    if (!result.error && process.env.SOLANA_RPC_URL) {
+      console.log('Loaded .env from:', envPath);
+      break;
+    }
   }
 }
 
@@ -31,9 +34,33 @@ import darkMarketsRoutes from './routes/darkMarkets';
 const app = express();
 const port = process.env.PORT || 3001;
 
+// CORS configuration for production and development
+const allowedOrigins = [
+  'http://localhost:3000',
+  'http://localhost:3001',
+  process.env.FRONTEND_URL,
+  // Vercel preview URLs
+].filter(Boolean) as string[];
+
 // Middleware
-app.use(helmet());
-app.use(cors());
+app.use(helmet({
+  crossOriginResourcePolicy: { policy: 'cross-origin' },
+}));
+app.use(cors({
+  origin: (origin, callback) => {
+    // Allow requests with no origin (mobile apps, Postman, etc.)
+    if (!origin) return callback(null, true);
+
+    // Allow Vercel preview deployments
+    if (origin.includes('.vercel.app')) return callback(null, true);
+
+    // Check allowed origins
+    if (allowedOrigins.includes(origin)) return callback(null, true);
+
+    callback(null, true); // Allow all for hackathon demo
+  },
+  credentials: true,
+}));
 app.use(express.json());
 
 // Routes
@@ -50,8 +77,12 @@ app.get('/health', (req, res) => {
   res.json({ status: 'OK', timestamp: new Date().toISOString() });
 });
 
-app.listen(port, () => {
-  console.log(`Dark Alpha API running on port ${port}`);
-});
+// Only start the server if not in serverless environment
+if (process.env.VERCEL !== '1') {
+  app.listen(port, () => {
+    console.log(`Dark Alpha API running on port ${port}`);
+  });
+}
 
+// Export for Vercel serverless
 export default app;

@@ -141,9 +141,31 @@ Users sign their own transactions. The server never holds user private keys.
 - `GET /api/agent/status` - Get AI agent status
 - `POST /api/agent/scan` - Trigger news scan
 
+## Deployment
+
+See [DEPLOYMENT.md](./DEPLOYMENT.md) for instructions on deploying to Vercel.
+
+Quick deploy commands:
+```bash
+# Deploy API
+cd apps/api && vercel --prod
+
+# Deploy Web
+cd apps/web && vercel --prod
+```
+
 ## Architecture
 
 See [ARCHITECTURE.md](./ARCHITECTURE.md) for technical details.
+
+## Documentation
+
+Visit `/docs` on the web app for comprehensive documentation including:
+- Getting Started guide
+- How the privacy layer works
+- System architecture
+- Smart contract details
+- FAQ
 
 ## Limitations
 
