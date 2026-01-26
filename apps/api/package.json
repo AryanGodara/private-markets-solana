@@ -7,11 +7,10 @@
   },
   "scripts": {
     "dev": "tsx watch src/index.ts",
-    "build": "esbuild src/index.ts --bundle --platform=node --target=node20 --outfile=dist/index.js --external:@solana/* --external:pnp-sdk --external:@inco/* --external:express --external:cors --external:helmet --external:dotenv --external:axios --external:zod --external:node-cron --external:rss-parser --external:@anthropic-ai/sdk --external:@google/*",
+    "build": "esbuild src/index.ts --bundle --platform=node --target=node20 --outfile=dist/index.js --format=cjs",
     "start": "node dist/index.js",
     "lint": "eslint src --ext .ts",
-    "type-check": "tsc --noEmit",
-    "vercel-build": "pnpm build"
+    "type-check": "tsc --noEmit"
   },
   "dependencies": {
     "@anthropic-ai/sdk": "^0.52.0",
