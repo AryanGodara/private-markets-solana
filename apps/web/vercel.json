@@ -1,18 +1,10 @@
 {
   "$schema": "https://openapi.vercel.sh/vercel.json",
   "framework": "nextjs",
-  "buildCommand": "pnpm build",
-  "installCommand": "pnpm install --no-frozen-lockfile --shamefully-hoist",
-  "devCommand": "pnpm dev",
-  "outputDirectory": ".next",
+  "installCommand": "npm install --legacy-peer-deps",
   "env": {
     "NEXT_PUBLIC_SOLANA_NETWORK": "devnet",
+    "NEXT_PUBLIC_API_URL": "https://api-phi-five-38.vercel.app",
     "SKIP_ENV_VALIDATION": "true"
-  },
-  "build": {
-    "env": {
-      "NEXT_TELEMETRY_DISABLED": "1",
-      "NODE_OPTIONS": "--max-old-space-size=4096"
-    }
   }
 }
