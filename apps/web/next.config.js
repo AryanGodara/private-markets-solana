@@ -3,6 +3,17 @@ const nextConfig = {
   reactStrictMode: true,
   swcMinify: true,
 
+  // Proxy API requests to the deployed API to avoid CORS issues
+  async rewrites() {
+    const apiUrl = process.env.NEXT_PUBLIC_API_URL || 'http://localhost:3001';
+    return [
+      {
+        source: '/api/:path*',
+        destination: `${apiUrl}/api/:path*`,
+      },
+    ];
+  },
+
   webpack: (config, { isServer }) => {
     // Fixes for Solana and crypto packages in browser
     if (!isServer) {

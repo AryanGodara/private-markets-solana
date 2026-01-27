@@ -2,7 +2,9 @@
  * API client for Dark Alpha backend
  */
 
-const API_BASE = process.env.NEXT_PUBLIC_API_URL || 'http://localhost:3001';
+// Use relative URLs - Next.js rewrites will proxy to the actual API
+// This avoids CORS issues in production
+const API_BASE = '';
 
 // DAC SPL token mint address (Dark Alpha Confidential)
 // Standard SPL token compatible with PNP markets
