@@ -43,9 +43,10 @@ Dark-Alpha-Solana/
 | Component | Address |
 |-----------|---------|
 | DAC Token Program | `ByaYNFzb2fPCkWLJCMEY4tdrfNqEAKAPJB3kDX86W5Rq` |
-| DAC SPL Mint | `JBxiN5BBM8ottNaUUpWw6EFtpMRd6iTnmLYrhZB5ArMo` |
-| DAC Mint Authority PDA | `TtFoW2UtEqkVGiGtbwwnzMxyGk1JyneqeNGiZEhcDRJ` |
-| Inco Lightning Program | `5sjEbPiqgZrYwR31ahR6Uk9wf5awoX61YGg7jExQSwaj` |
+| DAC SPL Mint | `H8dsWNbpfeZMAAxQdQuW2E5BWYQnjk27gfe9dDdwGYiv` |
+| DAC Config PDA | `9r9BxzUkF8MxJ5doRE8fEbh5Dy9sUQQNwiktUkS4KrJY` |
+| DAC Mint Authority PDA | `HjtJei4hJW3RFF2Uf2ehW8xjPjyoqaLdKzUxv761Jf5e` |
+| USDC Vault | `AWsahjbDPapSiEnRzingKfTmwLLHgmvj7wpwsgsdGCvh` |
 | USDC (Devnet) | `Gh9ZwEmdLJ8DscKNTkTqPbNwLNNBjuSzaG9Vp2KGtKJr` |
 
 ### Dark Markets (Live on Devnet)
