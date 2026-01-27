@@ -52,9 +52,9 @@ const faqs: FAQItem[] = [
     question: 'Is this live on mainnet?',
     answer: (
       <p>
-        No. Dark Alpha is a hackathon project currently running on Solana Devnet. The smart
-        contracts have not been audited. Do not use with real funds. If we pursue mainnet
-        deployment, it will only happen after a thorough security audit.
+        No. Dark Alpha is currently running on Solana Devnet. The smart contracts have not 
+        been audited. Do not use with real funds. Mainnet deployment will only happen after 
+        a thorough security audit.
       </p>
     ),
   },

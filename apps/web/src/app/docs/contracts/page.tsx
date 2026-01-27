@@ -345,7 +345,7 @@ pub fn place_confidential_bet(
           <div>
             <p className="text-red-800 font-medium mb-1">Do Not Use With Real Funds</p>
             <p className="text-red-700 text-sm">
-              This is a hackathon project. The smart contracts have not been audited and may
+              This project is experimental. The smart contracts have not been audited and may
               contain vulnerabilities. Only use on Devnet with test tokens.
             </p>
           </div>

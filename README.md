@@ -1,6 +1,6 @@
 # Dark Alpha
 
-Privacy-preserving prediction markets on Solana. Built for the PNP x Inco hackathon.
+Privacy-preserving prediction markets on Solana using Fully Homomorphic Encryption.
 
 ## What it does
 
@@ -179,7 +179,7 @@ Visit `/docs` on the web app for comprehensive documentation including:
 
 ## Limitations
 
-This is a hackathon project running on Solana devnet. It has not been audited. The DAC token program is experimental. Do not use with real funds.
+This project is running on Solana devnet. It has not been audited. The DAC token program is experimental. Do not use with real funds.
 
 ## License
 

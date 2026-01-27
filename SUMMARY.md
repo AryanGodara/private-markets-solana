@@ -2,7 +2,7 @@
 
 ## Project Overview
 
-Dark Alpha is a privacy-preserving prediction market platform built on Solana for a hackathon. It integrates:
+Dark Alpha is a privacy-preserving prediction market platform built on Solana. It integrates:
 
 1. **PNP SDK** (`@pnp-sdk/sdk`) - Prediction market protocol with bonding curve AMM
 2. **Inco SDK** (`@inco/solana-sdk`) - Client-side encryption for position privacy
@@ -148,7 +148,7 @@ curl -X POST http://localhost:3001/api/privacy/encrypt-trade \
 
 ---
 
-## Demo Steps for Hackathon
+## Demo Steps
 
 ### Step 1: Show Real Crypto Prices
 
@@ -310,7 +310,7 @@ USE_DEMO_NEWS=true
 1. **Test Full Trade Flow**: Connect Phantom wallet on devnet, execute encrypt -> trade -> verify
 2. **Test Gemini API**: If GOOGLE_API_KEY is set, test AI market generation
 3. **Polish UI**: Any remaining styling issues
-4. **Demo Recording**: Create video/screenshots for hackathon submission
+4. **Demo Recording**: Create video/screenshots for demonstration
 
 ---
 

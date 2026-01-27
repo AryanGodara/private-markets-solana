@@ -17,8 +17,7 @@ export function WalletContextProvider({ children }: WalletProviderProps) {
   return (
     <PhantomProvider
       config={{
-        // Only use injected provider (browser extension)
-        // No OAuth needed for hackathon demo
+        // Only use browser extension (injected provider)
         providers: ["injected"],
         // Required: Specify which address types to support
         addressTypes: [AddressType.solana],

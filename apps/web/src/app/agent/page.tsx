@@ -37,7 +37,7 @@ export default function AgentPage() {
   } | null>(null);
   const [error, setError] = useState<string | null>(null);
 
-  // Demo signals for hackathon
+  // Demo signals
   const [signals] = useState<Signal[]>([
     {
       id: '1',

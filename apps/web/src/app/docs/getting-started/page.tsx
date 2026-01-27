@@ -211,7 +211,7 @@ export default function GettingStartedPage() {
           <div>
             <p className="text-amber-800 font-medium mb-1">Important Reminder</p>
             <p className="text-amber-700 text-sm">
-              This is a hackathon project on Devnet. The smart contracts have not been audited.
+              This project is on Devnet. The smart contracts have not been audited.
               Do not use real funds or mainnet assets.
             </p>
           </div>

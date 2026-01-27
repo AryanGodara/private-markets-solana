@@ -169,7 +169,7 @@ export default function DocsPage() {
 
       <div className="mt-12 p-4 bg-amber-50 border border-amber-200 rounded-lg not-prose">
         <p className="text-amber-800 font-medium">
-          This is a hackathon project running on Solana Devnet. The DAC program has not been
+          This project is running on Solana Devnet. The DAC program has not been
           audited. Do not use with real funds.
         </p>
       </div>

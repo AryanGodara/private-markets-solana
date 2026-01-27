@@ -198,4 +198,4 @@ Running on Solana devnet.
 
 ---
 
-All features are hackathon-grade. Not audited. Devnet only.
+All features are experimental. Not audited. Devnet only.

@@ -122,7 +122,7 @@ vercel --prod
 ### CORS errors in browser
 
 - Make sure `FRONTEND_URL` is set in API environment variables
-- The API is configured to allow all origins for the hackathon demo
+- The API is configured to allow all origins for the demo
 
 ### Build fails
 

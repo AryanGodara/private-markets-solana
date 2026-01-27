@@ -140,7 +140,7 @@ First real implementation of private betting on Solana using FHE. Shows that pre
 
 ## Limitations
 
-This is a hackathon project.
+This is an experimental project.
 
 - Running on devnet only
 - DAC program not audited
@@ -171,4 +171,4 @@ Check the order book page to see aggregate activity without individual positions
 
 ---
 
-Built for PNP x Inco Hackathon
+Built on Solana
